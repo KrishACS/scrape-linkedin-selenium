@@ -117,3 +117,4 @@ class linkedin_profile_scraper(Scraper):
             cs.driver.get(link.get_attribute('href'))
             cs.wait_for_el('.search-s-facet--facetNetwork form button')
             return cs.scrape_all_pages()
+#end
