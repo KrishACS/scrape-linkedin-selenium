@@ -19,7 +19,7 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words  h1',
+            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words > h1',
             'current_position': '.text-body-medium break-words  div',
             'current_location': '.text-body-medium break-words > span',
             'connections': '.pv-top-card--list-bullet > li'
@@ -27,7 +27,7 @@ class Profile(ResultsObject):
         })
     
         personal_info['summary'] = text_or_default(
-            self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
+            self.soup, 'pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view', '').replace('... see more', '').strip()
 
         image_url = ''
         # If this is not None, you were scraping your own profile.
@@ -46,10 +46,6 @@ class Profile(ResultsObject):
 
         personal_info['image'] = image_url
 
-        followers_text = text_or_default(self.soup,
-                                         '.pv-recent-activity-section__follower-count', '')
-        personal_info['followers'] = followers_text.replace(
-            'followers', '').strip()
 
         # print(contact_info)
         personal_info.update(get_info(contact_info, {
@@ -132,7 +128,7 @@ class Profile(ResultsObject):
             'courses', 'projects', 'honors',
             'test_scores', 'languages', 'organizations'
         ])
-        container = one_or_default(self.soup, '.pv-accomplishments-section')
+        container = one_or_default(self.soup, 'pv-accomplishments-block__list-container')
         for key in accomplishments:
             accs = all_or_default(container, 'section.' + key + ' ul > li')
             accs = map(lambda acc: acc.get_text() if acc else None, accs)
