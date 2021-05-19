@@ -19,11 +19,11 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.pv-top-card--list > li',
-            'headline': '.flex-1.mr5 h2',
-            'company': 'li[data-control-name="position_see_more"]',
-            'school': 'li[data-control-name="education_see_more"]',
+            'name': '.v-align-middle'',
+            'company': '.mb2 .inline-show-more-text--is-collapsed-with-line-clamp',
+            'current_position': '.text-body-medium',
             'location': '.pv-top-card--list-bullet > li',
+            'connections': '.pv-top-card--list > li'
         })
 
         personal_info['summary'] = text_or_default(
