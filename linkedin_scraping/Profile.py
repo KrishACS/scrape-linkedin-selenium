@@ -19,18 +19,13 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': 'text-heading-xlarge inline t-24 v-align-middle break-words > h1',
+            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words  h1',
+            'current_position': '.text-body-medium break-words  div',
+            'current_location': '.text-body-medium break-words > span',
+            'connections': '.pv-top-card--list-bullet > li'
       
         })
-        soup =self.soup
-        #soup=BeautifulSoup(soup,'lxml')
-        #personal_info={}
-        # Note that some of these selectors may have multiple selections, but
-        # get_info takes the first match
-        personal_info['current_position'] = soup.find('div', {'class': 'text-body-medium break-words' }).get_text().strip()
-        personal_info['current_location'] =soup.find('div', {'class': 'pb2' }).find_all('span')[0].get_text().strip()
-        personal_info['connections'] =soup.find('span', {'class': 't-bold' }).get_text().strip()
-
+    
         personal_info['summary'] = text_or_default(
             self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
 
