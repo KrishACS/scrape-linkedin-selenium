@@ -1,6 +1,6 @@
 from .utils import *
 from .Profile import Profile
-from .ProfileScraper import ProfileScraper
+from .linkedin_profile_scraper import linkedin_profile_scraper
 from .ParallelScraper import scrape_in_parallel
 from .Company import Company
 from .CompanyScraper import CompanyScraper
