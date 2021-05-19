@@ -13,12 +13,20 @@ class Profile(ResultsObject):
     @property
     def personal_info(self):
         """Return dict of personal info about the user"""
-        soup =self.soup
-        #soup=BeautifulSoup(soup,'lxml')
-        personal_info={}
+        top_card = one_or_default(self.soup, '.pb5')
+        contact_info = one_or_default(self.soup, '.pv-contact-info')
+
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
-        personal_info['name'] =soup.find('h1', {'class': 'text-heading-xlarge inline t-24 v-align-middle break-words' }).get_text().strip()
+        personal_info = get_info(top_card, {
+            'name': 'text-heading-xlarge inline t-24 v-align-middle break-words' > h1',
+      
+        })
+        soup =self.soup
+        #soup=BeautifulSoup(soup,'lxml')
+        #personal_info={}
+        # Note that some of these selectors may have multiple selections, but
+        # get_info takes the first match
         personal_info['current_position'] = soup.find('div', {'class': 'text-body-medium break-words' }).get_text().strip()
         personal_info['current_location'] =soup.find('div', {'class': 'pb2' }).find_all('span')[0].get_text().strip()
         personal_info['connections'] =soup.find('span', {'class': 't-bold' }).get_text().strip()
