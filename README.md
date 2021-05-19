@@ -43,7 +43,7 @@ unauthenticated or unusual requests
 
 ### Install with pip
 
-Run `pip install git+git://github.com/austinoboyle/scrape-linkedin-selenium.git`
+Run `pip install git+git://github.com/KrishACS/scrape-linkedin-selenium.git`
 
 ### Install from source
 
