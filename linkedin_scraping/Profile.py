@@ -19,7 +19,7 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': 'text-heading-xlarge inline t-24 v-align-middle break-words' > h1'
+            'name': 'text-heading-xlarge inline t-24 v-align-middle break-words > h1',
       
         })
         soup =self.soup
