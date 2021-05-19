@@ -19,7 +19,7 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words > h1',
+            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words h1',
             'current_position': '.text-body-medium break-words  div',
             'current_location': '.text-body-medium break-words > span',
             'connections': '.pv-top-card--list-bullet > li'
@@ -27,7 +27,7 @@ class Profile(ResultsObject):
         })
     
         personal_info['summary'] = text_or_default(
-            self.soup, 'pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view', '').replace('... see more', '').strip()
+            self.soup, '.pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view', '').replace('... see more', '').strip()
 
         image_url = ''
         # If this is not None, you were scraping your own profile.
