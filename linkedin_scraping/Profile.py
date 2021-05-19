@@ -54,12 +54,7 @@ class Profile(ResultsObject):
             'connected': '.ci-connected .pv-contact-info__ci-container'
         }))
 
-        personal_info['websites'] = []
-        if contact_info:
-            websites = contact_info.select('.ci-websites li a')
-            websites = list(map(lambda x: x['href'], websites))
-            personal_info['websites'] = websites
-
+        
         return personal_info
 
     @property
