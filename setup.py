@@ -6,17 +6,17 @@ def readme():
         return f.read()
 
 
-setup(name='scrape_linkedin',
+setup(name='linkedin_scraping',
       version="0.7.2",
       description='Selenium Scraper for Linkedin Profiles',
       long_description=readme(),
-      author="Austin O'Boyle",
-      author_email='hello@austinoboyle.com',
+      author="KrishACS",
+      author_email='acssathya333@gmail.com',
       license='MIT',
-      url='https://github.com/austinoboyle/scrape-linkedin-selenium',
-      packages=['scrape_linkedin'],
+      url='https://github.com/KrishACS/scrape-linkedin-selenium',
+      packages=['linkedin_scraping'],
       entry_points={'console_scripts': [
-          'scrapeli=scrape_linkedin.cli:scrape']},
+          'scrapeli=linkedin_scraping.cli:scrape']},
       keywords='linkedin selenium scraper web scraping',
       #   include_package_data=True,
       #   package_data={'scraper': ['data/*.txt']},
