@@ -1,5 +1,5 @@
 from .CompanyScraper import CompanyScraper
-from .ProfileScraper2 import ProfileScraper2
+from .ProfileScraper import ProfileScraper
 from .ConnectionScraper import ConnectionScraper
 from .utils import HEADLESS_OPTIONS, split_lists
 from joblib import Parallel, delayed
