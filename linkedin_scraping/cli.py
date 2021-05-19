@@ -13,7 +13,7 @@ pylinkedin -u https://www.linkedin.com/in/nadia-freitag-81173966 -a skills -o my
 
 import click
 from click import ClickException
-from .ProfileScraper2 import ProfileScraper2
+from .ProfileScraper import ProfileScraper
 from .CompanyScraper import CompanyScraper
 from .Profile import Profile
 from .utils import HEADLESS_OPTIONS
@@ -54,7 +54,7 @@ def scrape(url, user, company, attribute, input_file, headless, output_file, dri
             with CompanyScraper(driver=driver_type, cookie=os.environ['LI_AT'], driver_options=driver_options) as scraper:
                 profile = scraper.scrape(company=company)
         else:
-            with ProfileScraper2(driver=driver_type, cookie=os.environ['LI_AT'], driver_options=driver_options) as scraper:
+            with ProfileScraper(driver=driver_type, cookie=os.environ['LI_AT'], driver_options=driver_options) as scraper:
                 profile = scraper.scrape(url=url)
 
     else:
