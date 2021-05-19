@@ -112,7 +112,7 @@ class Profile(ResultsObject):
         skills = self.soup.select('.pv-skill-category-entity__skill-wrapper')
         skills = list(map(get_skill_info, skills))
 
-        # Sort skills based on endorsements.  If the person has no endorsements
+        # Sort skills based on endorsements.  If the person has no endorsements.
         def sort_skills(x): return int(
             x['endorsements'].replace('+', '')) if x['endorsements'] else 0
         return sorted(skills, key=sort_skills, reverse=True)
