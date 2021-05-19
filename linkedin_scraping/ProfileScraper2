@@ -11,7 +11,7 @@ from .Profile import Profile
 from .utils import AnyEC
 
 
-class linkedin_profile_scraper(Scraper):
+class ProfileScraper2(Scraper):
     """
     Scraper for Personal LinkedIn Profiles. See inherited Scraper class for
     details about the constructor.
