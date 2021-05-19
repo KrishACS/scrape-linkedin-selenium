@@ -19,9 +19,9 @@ class Profile(ResultsObject):
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.text-heading-xlarge inline t-24 v-align-middle break-words h1',
-            'current_position': '.text-body-medium break-words  div',
-            'current_location': '.text-body-medium break-words > span',
+            'name': '.text-heading-xlarge.inline.t-24.v-align-middle.break-words h1',
+            'current_position': '.text-body-medium.break-words  div',
+            'current_location': '.text-body-small.inline.t-black--light.break-words > span',
             'connections': '.pv-top-card--list-bullet > li'
       
         })
