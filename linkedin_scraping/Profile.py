@@ -13,21 +13,23 @@ class Profile(ResultsObject):
     @property
     def personal_info(self):
         """Return dict of personal info about the user"""
-        top_card = one_or_default(self.soup, '.pb5')
+        top_card = one_or_default(self.soup, '.pv-top-card')
         contact_info = one_or_default(self.soup, '.pv-contact-info')
 
+        
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.text-heading-xlarge.inline.t-24.v-align-middle.break-words h1',
+            'name': '.pv-text-details__left-panel mr5 > h1',
             'current_position': '.text-body-medium.break-words  div',
             'current_location': '.text-body-small.inline.t-black--light.break-words > span',
-            'connections': '.pv-top-card--list-bullet > li'
-      
+            'current_location2': '.pb2 > span',
+            'connections': '.pv-top-card--list-bullet > li',
+          
         })
-    
+
         personal_info['summary'] = text_or_default(
-            self.soup, '.pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view', '').replace('... see more', '').strip()
+            self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
 
         image_url = ''
         # If this is not None, you were scraping your own profile.
@@ -46,6 +48,10 @@ class Profile(ResultsObject):
 
         personal_info['image'] = image_url
 
+        followers_text = text_or_default(self.soup,
+                                         '.pv-recent-activity-section__follower-count', '')
+        personal_info['followers'] = followers_text.replace(
+            'followers', '').strip()
 
         # print(contact_info)
         personal_info.update(get_info(contact_info, {
@@ -54,7 +60,12 @@ class Profile(ResultsObject):
             'connected': '.ci-connected .pv-contact-info__ci-container'
         }))
 
-        
+        personal_info['websites'] = []
+        if contact_info:
+            websites = contact_info.select('.ci-websites li a')
+            websites = list(map(lambda x: x['href'], websites))
+            personal_info['websites'] = websites
+
         return personal_info
 
     @property
@@ -98,7 +109,7 @@ class Profile(ResultsObject):
         skills = self.soup.select('.pv-skill-category-entity__skill-wrapper')
         skills = list(map(get_skill_info, skills))
 
-        # Sort skills based on endorsements.  If the person has no endorsements..
+        # Sort skills based on endorsements.  If the person has no endorsements
         def sort_skills(x): return int(
             x['endorsements'].replace('+', '')) if x['endorsements'] else 0
         return sorted(skills, key=sort_skills, reverse=True)
@@ -123,7 +134,7 @@ class Profile(ResultsObject):
             'courses', 'projects', 'honors',
             'test_scores', 'languages', 'organizations'
         ])
-        container = one_or_default(self.soup, 'pv-accomplishments-block__list-container')
+        container = one_or_default(self.soup, '.pv-accomplishments-section')
         for key in accomplishments:
             accs = all_or_default(container, 'section.' + key + ' ul > li')
             accs = map(lambda acc: acc.get_text() if acc else None, accs)
