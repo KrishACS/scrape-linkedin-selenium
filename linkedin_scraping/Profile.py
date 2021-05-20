@@ -13,16 +13,15 @@ class Profile(ResultsObject):
     @property
     def personal_info(self):
         """Return dict of personal info about the user"""
-        top_card = one_or_default(self.soup, '.pv-top-card')
+        top_card = one_or_default(self.soup, '.pb5')
         contact_info = one_or_default(self.soup, '.pv-contact-info')
 
         
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.pv-text-details__left-panel mr5 > h1',
-            'current_position': '.text-body-medium.break-words  div',
-            'current_location': '.text-body-small.inline.t-black--light.break-words > span',
+            'name': '.pv-text-details__left-panel mr5  h1',
+            'current_position': '.text-body-medium break-words div',
             'current_location2': '.pb2 > span',
             'connections': '.pv-top-card--list-bullet > li',
           
