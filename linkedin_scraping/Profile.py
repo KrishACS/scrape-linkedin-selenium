@@ -16,21 +16,18 @@ class Profile(ResultsObject):
         top_card = one_or_default(self.soup, '.pb5')
         contact_info = one_or_default(self.soup, '.pv-contact-info')
 
-        
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
             'name': '.pv-text-details__left-panel.mr5  h1',
             #'current_position': '.text-body-medium .break-words div',
             'current_location': '.pb2 > span',
+            #'school': 'li[data-control-name="education_see_more"]',
             'connections': '.pv-top-card--list-bullet > li',
-          
         })
-        
         personal_info['current_position'] = self.soup.find('div', {'class': 'text-body-medium break-words' }).get_text().strip()
-        
-        
-        #personal_info['summary'] = text_or_default(self.soup, '.pv-profile-section .pv-about-section .artdeco-card .p5 .mt4 .ember-view', '').replace('... see more', '').strip()
+        #personal_info['summary'] = text_or_default(
+            #self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
 
         image_url = ''
         # If this is not None, you were scraping your own profile.
@@ -66,14 +63,6 @@ class Profile(ResultsObject):
             websites = contact_info.select('.ci-websites li a')
             websites = list(map(lambda x: x['href'], websites))
             personal_info['websites'] = websites
-        skills = self.soup.select('.pv-skill-category-entity__skill-wrapper')
-        skills = list(map(get_skill_info, skills))
-
-        # Sort skills based on endorsements.  If the person has no endorsements
-        def sort_skills(x): return int(
-            x['endorsements'].replace('+', '')) if x['endorsements'] else 0
-        personal_info['skills']=sorted(skills, key=sort_skills, reverse=True)
-        
 
         return personal_info
 
@@ -100,20 +89,11 @@ class Profile(ResultsObject):
             container, '#education-section .pv-education-entity')
         schools = list(map(get_school_info, schools))
         experiences['education'] = schools
-        """
+
         volunteering = all_or_default(
             container, '.pv-profile-section.volunteering-section .pv-volunteering-entity')
         volunteering = list(map(get_volunteer_info, volunteering))
         experiences['volunteering'] = volunteering
-        """
-        
-        skills = self.soup.select('.pv-skill-category-entity__skill-wrapper')
-        skills = list(map(get_skill_info, skills))
-
-        # Sort skills based on endorsements.  If the person has no endorsements
-        def sort_skills(x): return int(
-            x['endorsements'].replace('+', '')) if x['endorsements'] else 0
-        experiences['skills']=sorted(skills, key=sort_skills, reverse=True)
 
         return experiences
 
@@ -124,7 +104,6 @@ class Profile(ResultsObject):
             list of skills {name: str, endorsements: int} in decreasing order of
             endorsement quantity.
         """
-        
         skills = self.soup.select('.pv-skill-category-entity__skill-wrapper')
         skills = list(map(get_skill_info, skills))
 
