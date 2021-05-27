@@ -13,21 +13,21 @@ class Profile(ResultsObject):
     @property
     def personal_info(self):
         """Return dict of personal info about the user"""
-        top_card = one_or_default(self.soup, '.pb5')
+        top_card = one_or_default(self.soup, '.pv-top-card')
         contact_info = one_or_default(self.soup, '.pv-contact-info')
 
         # Note that some of these selectors may have multiple selections, but
         # get_info takes the first match
         personal_info = get_info(top_card, {
-            'name': '.pv-text-details__left-panel.mr5  h1',
-            #'current_position': '.text-body-medium .break-words div',
-            'current_location': '.pb2 > span',
-            #'school': 'li[data-control-name="education_see_more"]',
-            'connections': '.pv-top-card--list-bullet > li',
+            'name': '.pv-top-card--list > li',
+            'headline': '.flex-1.mr5 h2',
+            'company': 'li[data-control-name="position_see_more"]',
+            'school': 'li[data-control-name="education_see_more"]',
+            'location': '.pv-top-card--list-bullet > li',
         })
-        personal_info['current_position'] = self.soup.find('div', {'class': 'text-body-medium break-words' }).get_text().strip()
-        #personal_info['summary'] = text_or_default(
-            #self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
+
+        personal_info['summary'] = text_or_default(
+            self.soup, '.pv-about-section .pv-about__summary-text', '').replace('... see more', '').strip()
 
         image_url = ''
         # If this is not None, you were scraping your own profile.
