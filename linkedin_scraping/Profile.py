@@ -188,9 +188,8 @@ class Profile(ResultsObject):
             recs["given"].append(get_recommendation_details(rec_given))
 
         return recs
-    
 
-     def to_dict(self):
+    def to_dict(self):
         info = super(Profile, self).to_dict()
         info['personal_info']['current_company_link'] = ''
         jobs = info['experiences']['jobs']
@@ -199,4 +198,3 @@ class Profile(ResultsObject):
         else:
             print("Unable to determine current company...continuing")
         return info
-   
